@@ -13,7 +13,7 @@ Every hand-rolled MCP server starts the same way: copy a demo from the docs, reg
 ## Install
 
 ```bash
-npm install -g mcpnew
+npm install -g mcpnewcli
 ```
 
 Zero runtime dependencies. Node 18+.

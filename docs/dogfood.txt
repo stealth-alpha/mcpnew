@@ -1,0 +1,22 @@
+# mcpnewcli dogfood — 2026-08-21T23:05:52Z
+Packed tarball (npm pack) installed into a clean project; full lifecycle via npx:
+
+$ npm pack mcpnewcli → mcpnewcli-0.1.0.tgz
+$ npm install ../mcpnewcli-0.1.0.tgz
+
+$ npx mcpnew --version
+0.1.0
+
+$ npx mcpnew create mcp-dogfood --lang ts
+✔ scaffolded mcp-dogfood (ts)
+  + package.json  + README.md  + .gitignore
+  + src/manifest.ts  + src/audit.ts  + src/server.ts
+  + test/server.test.ts  + tsconfig.json
+  + mcp.permissions.json   (everything "deny")
+
+$ npx mcpnew add-tool deploy-note --dir mcp-dogfood
+✔ added tool stub deploy-note
+⚠ "deploy-note" is DENIED in mcp.permissions.json — flip to "allow" only after review.
+
+$ npx mcpnew audit --dir mcp-dogfood
+✔ audit passed: deny-all posture intact, audit hooks wired

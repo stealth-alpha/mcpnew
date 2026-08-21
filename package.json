@@ -1,5 +1,5 @@
 {
-  "name": "mcpnew",
+  "name": "mcpnewcli",
   "version": "0.1.0",
   "description": "Scaffold secure-by-default MCP servers (TypeScript or JavaScript) with deny-all permissions, typed tool stubs, and audit hooks pre-wired.",
   "type": "module",
