@@ -1,0 +1,48 @@
+{
+  "name": "mcpnew",
+  "version": "0.1.0",
+  "description": "Scaffold secure-by-default MCP servers (TypeScript or JavaScript) with deny-all permissions, typed tool stubs, and audit hooks pre-wired.",
+  "type": "module",
+  "bin": {
+    "mcpnew": "./bin/mcpnew.js"
+  },
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./cli": "./src/cli.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "scaffolding",
+    "security",
+    "least-privilege",
+    "audit",
+    "cli",
+    "typescript"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "mcpnew Contributors"
+  },
+  "homepage": "https://stealth-alpha.github.io/mcpnew/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stealth-alpha/mcpnew.git"
+  },
+  "bugs": {
+    "url": "https://github.com/stealth-alpha/mcpnew/issues"
+  }
+}

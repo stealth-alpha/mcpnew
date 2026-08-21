@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>mcpnew — secure-by-default MCP server scaffolding</title>
+<meta name="description" content="mcpnew scaffolds MCP servers in TypeScript or JavaScript with deny-all permissions, typed tool stubs, and audit hooks pre-wired.">
+<style>
+:root{--bg:#0b0f17;--bg2:#111827;--panel:#0f172a;--border:#1f2937;--text:#e5e7eb;--muted:#94a3b8;--accent:#10b981;--accent2:#3b82f6;--ok:#34d399}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:28px;padding:16px 0;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;color:var(--text)}
+.brand .dot{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+.links{display:flex;gap:16px;margin-left:auto;align-items:center}
+.links a{color:var(--muted);font-weight:500;font-size:15px}
+.links a:hover{color:var(--text);text-decoration:none}
+.btn{display:inline-block;border-radius:10px;padding:10px 18px;font-weight:600;font-size:15px;border:1px solid transparent}
+.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+.btn.ghost{border-color:var(--border);color:var(--text)}
+.btn.small{padding:7px 14px;font-size:13.5px}
+section{padding:72px 0}
+.hero{text-align:center;padding:88px 0 64px}
+.eyebrow{display:inline-block;padding:6px 14px;border-radius:999px;background:var(--bg2);border:1px solid var(--border);color:var(--muted);font-size:13px;font-weight:600;margin-bottom:22px}
+.hero h1{font-size:clamp(2.4rem,5vw,4rem);letter-spacing:-.035em;line-height:1.05;margin:.4rem auto 20px;max-width:820px}
+.hero h1 .grad{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);font-size:clamp(1.05rem,2.2vw,1.3rem);max-width:660px;margin:0 auto 32px}
+.ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.term{max-width:720px;margin:44px auto 0;text-align:left;background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.term .bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--bg2)}
+.term .bar .c{width:12px;height:12px;border-radius:50%}
+.term .bar .c.r{background:#ef4444}.term .bar .c.y{background:#f59e0b}.term .bar .c.g{background:#10b981}
+.term .bar .t{margin-left:12px;color:var(--muted);font-size:13px}
+.term pre{margin:0;padding:18px 22px;color:#cbd5e1;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:14px;line-height:1.7;overflow-x:auto}
+.term .p{color:#64748b}.term .g{color:var(--ok)}.term .c{color:var(--accent)}.term .dim{color:#64748b}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:24px}
+.card h3{margin:0 0 8px;font-size:18px}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.card .ico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent);font-size:20px;margin-bottom:14px}
+.section-head{text-align:center;margin-bottom:44px}
+.section-head h2{font-size:clamp(1.8rem,3.4vw,2.6rem);letter-spacing:-.02em;margin:0 0 10px}
+.section-head p{color:var(--muted);max-width:620px;margin:0 auto}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;counter-reset:step}
+.step{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:24px;position:relative}
+.step::before{counter-increment:step;content:counter(step);position:absolute;top:20px;right:22px;font-size:32px;font-weight:800;color:color-mix(in srgb,var(--accent) 60%,transparent)}
+.step .code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--accent);font-size:14px}
+.pricing{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;align-items:stretch}
+.tier{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px;display:flex;flex-direction:column}
+.tier.featured{border-color:var(--accent);background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 12%,var(--bg2)),var(--bg2))}
+.tier .name{font-weight:700;font-size:17px}
+.tier .price{font-size:38px;font-weight:800;letter-spacing:-.03em;margin:14px 0}
+.tier .price .per{font-size:15px;color:var(--muted);font-weight:500}
+.tier ul{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:10px;flex:1}
+.tier li{color:var(--muted);font-size:14.5px;display:flex;gap:10px}
+.tier li::before{content:"✓";color:var(--ok);font-weight:700}
+.tier .btn{margin-top:auto;text-align:center}
+.faq{max-width:760px;margin:0 auto}
+.qa{padding:20px 0;border-bottom:1px solid var(--border)}
+.qa h3{font-size:17px;margin:0 0 8px}
+.qa p{margin:0;color:var(--muted)}
+footer{border-top:1px solid var(--border);padding:40px 0;color:var(--muted);font-size:14px;text-align:center}
+.kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+@media(max-width:640px){.links a.hide{display:none}}
+</style>
+</head>
+<body>
+<header class="nav wrap">
+  <a class="brand" href="#"><span class="dot"></span>mcpnew</a>
+  <nav class="links">
+    <a href="#features">Features</a>
+    <a href="#how">How it works</a>
+    <a href="#pricing">Pricing</a>
+    <a class="btn primary small" href="https://github.com/stealth-alpha/mcpnew">GitHub</a>
+  </nav>
+</header>
+
+<section class="hero wrap">
+  <span class="eyebrow">Model Context Protocol · Security · Scaffolding</span>
+  <h1>MCP servers that start <span class="grad">denied</span>, not exposed</h1>
+  <p>mcpnew scaffolds secure-by-default MCP servers in TypeScript or JavaScript — deny-all permissions, typed tool stubs, and audit hooks pre-wired from the first commit.</p>
+  <div class="ctas">
+    <a class="btn primary" href="#how">Get started</a>
+    <a class="btn ghost" href="https://github.com/stealth-alpha/mcpnew">View source</a>
+  </div>
+  <div class="term">
+    <div class="bar"><span class="c r"></span><span class="c y"></span><span class="c g"></span><span class="t">zsh</span></div>
+    <pre><span class="p">$</span> npx mcpnew create inventory --lang ts
+<span class="g">✔</span> scaffolded <span class="c">inventory</span> (ts)
+  <span class="dim">+</span> src/server.ts          <span class="dim"># typed tools + gates + audit hooks</span>
+  <span class="dim">+</span> src/audit.js           <span class="dim"># JSONL trail → logs/audit.jsonl</span>
+  <span class="dim">+</span> mcp.permissions.json   <span class="dim"># everything starts "deny"</span>
+<span class="p">$</span> npx mcpnew audit
+<span class="g">✔ audit passed: deny-all posture intact, audit hooks wired</span></pre>
+  </div>
+</section>
+
+<section id="features" class="wrap">
+  <div class="section-head">
+    <h2>Secure by construction, not by intention</h2>
+    <p>The default MCP demo copies an allow-everything posture into your codebase. mcpnew ships the opposite default and keeps it verifiable.</p>
+  </div>
+  <div class="grid">
+    <div class="card"><div class="ico">🔒</div><h3>Deny-all permissions</h3><p>Tools, resources, prompts, network, filesystem — every capability starts denied in <span class="kbd">mcp.permissions.json</span>. Wildcards are rejected outright.</p></div>
+    <div class="card"><div class="ico">🧩</div><h3>Typed tool stubs</h3><p><span class="kbd">mcpnew add-tool</span> inserts a zod-schema'd stub already wired through its permission gate and audit hook. You write the body; the plumbing is correct on arrival.</p></div>
+    <div class="card"><div class="ico">🧾</div><h3>Audit hooks pre-wired</h3><p>Every tool call logs timestamp, tool, arguments, outcome, and duration to <span class="kbd">logs/audit.jsonl</span> — gitignored, append-only, yours to ship anywhere.</p></div>
+    <div class="card"><div class="ico">✅</div><h3>Audit as a test gate</h3><p><span class="kbd">npx mcpnew audit</span> exits non-zero if anything loosens: allow-all defaults, ungated tools, unwired hooks. Drop it into CI and stay honest.</p></div>
+    <div class="card"><div class="ico">⚙️</div><h3>TS or JS, your pick</h3><p>One flag switches between strict TypeScript (with manifest types) and plain ESM JavaScript. Both get identical security scaffolding.</p></div>
+    <div class="card"><div class="ico">📦</div><h3>Zero-dep CLI</h3><p>mcpnew itself has zero runtime dependencies on Node 18+. Your generated project depends only on the official MCP SDK and zod.</p></div>
+  </div>
+</section>
+
+<section id="how" class="wrap">
+  <div class="section-head">
+    <h2>Three commands to a defensible server</h2>
+    <p>From empty directory to CI-audited MCP server in under a minute.</p>
+  </div>
+  <div class="steps">
+    <div class="step"><h3>Scaffold</h3><p class="code">mcpnew create srv</p><p>Pick TS or JS. You get a working stdio MCP server, tests that assert the deny-all posture, and a permission manifest where everything is denied.</p></div>
+    <div class="step"><h3>Add tools</h3><p class="code">mcpnew add-tool search</p><p>Each new tool arrives typed, gated by <span class="kbd">requireAllowed()</span>, audited — and denied until you flip exactly one manifest line after review.</p></div>
+    <div class="step"><h3>Stay verified</h3><p class="code">mcpnew audit</p><p>Fails loudly when defaults loosen, tools lose their gates, or hooks go missing. Wire it into CI so drift never merges.</p></div>
+  </div>
+</section>
+
+<section id="pricing" class="wrap">
+  <div class="section-head">
+    <h2>Pricing</h2>
+    <p>The scaffold is free and open source, forever. Pro is for teams running MCP servers in production.</p>
+  </div>
+  <div class="pricing">
+    <div class="tier">
+      <div class="name">Open Source</div>
+      <div class="price">$0<span class="per"> / forever</span></div>
+      <ul>
+        <li>Unlimited scaffolds (TS &amp; JS)</li>
+        <li>Deny-all manifests + typed stubs</li>
+        <li>Audit hooks &amp; JSONL trail</li>
+        <li>mcpnew audit for local + CI</li>
+      </ul>
+      <a class="btn ghost" href="https://github.com/stealth-alpha/mcpnew">Use it now</a>
+    </div>
+    <div class="tier featured">
+      <div class="name">Pro</div>
+      <div class="price">$9<span class="per"> / month</span></div>
+      <ul>
+        <li>Permission-manifest PR review workflow</li>
+        <li>Required sign-off before deny → allow flips</li>
+        <li>Org-wide audit-log shipping (Splunk, Datadog, Loki)</li>
+        <li>Compliance report: grants mapped to approvals</li>
+      </ul>
+      <a class="btn primary" href="#">License via Gumroad — link placeholder</a>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="wrap">
+  <div class="faq">
+    <div class="section-head"><h2>FAQ</h2></div>
+    <div class="qa"><h3>Does denying everything break my server?</h3><p>No — denial happens per tool call with a clear error naming the manifest line to change. Scaffolded tests assert the posture you intend, so flipping a tool to allow is a reviewed, visible diff.</p></div>
+    <div class="qa"><h3>Which MCP SDK does the generated code use?</h3><p>The official <span class="kbd">@modelcontextprotocol/sdk</span> with zod schemas over stdio. No lock-in: it's ordinary SDK code you own and can extend.</p></div>
+    <div class="qa"><h3>TypeScript or JavaScript?</h3><p>Both are first-class: <span class="kbd">--lang ts</span> adds strict types for the permission manifest and tool args; the default JS build runs with zero build step.</p></div>
+    <div class="qa"><h3>What does Pro actually add?</h3><p>Governance: pull-request diffs of permission manifests, required approval before any deny becomes allow, centralized audit-log shipping, and a compliance report mapping each grant to its approval record. One tier, $9/month.</p></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">mcpnew — secure-by-default MCP scaffolding · MIT licensed · <a href="https://github.com/stealth-alpha/mcpnew">GitHub</a></div>
+</footer>
+</body>
+</html>
