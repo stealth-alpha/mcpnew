@@ -87,12 +87,12 @@ footer{border-top:1px solid var(--border);padding:40px 0;color:var(--muted);font
   </div>
   <div class="term">
     <div class="bar"><span class="c r"></span><span class="c y"></span><span class="c g"></span><span class="t">zsh</span></div>
-    <pre><span class="p">$</span> npx mcpnew create inventory --lang ts
+    <pre><span class="p">$</span> npx mcpnewcli create inventory --lang ts
 <span class="g">✔</span> scaffolded <span class="c">inventory</span> (ts)
   <span class="dim">+</span> src/server.ts          <span class="dim"># typed tools + gates + audit hooks</span>
   <span class="dim">+</span> src/audit.js           <span class="dim"># JSONL trail → logs/audit.jsonl</span>
   <span class="dim">+</span> mcp.permissions.json   <span class="dim"># everything starts "deny"</span>
-<span class="p">$</span> npx mcpnew audit
+<span class="p">$</span> npx mcpnewcli audit
 <span class="g">✔ audit passed: deny-all posture intact, audit hooks wired</span></pre>
   </div>
 </section>
@@ -106,7 +106,7 @@ footer{border-top:1px solid var(--border);padding:40px 0;color:var(--muted);font
     <div class="card"><div class="ico">🔒</div><h3>Deny-all permissions</h3><p>Tools, resources, prompts, network, filesystem — every capability starts denied in <span class="kbd">mcp.permissions.json</span>. Wildcards are rejected outright.</p></div>
     <div class="card"><div class="ico">🧩</div><h3>Typed tool stubs</h3><p><span class="kbd">mcpnew add-tool</span> inserts a zod-schema'd stub already wired through its permission gate and audit hook. You write the body; the plumbing is correct on arrival.</p></div>
     <div class="card"><div class="ico">🧾</div><h3>Audit hooks pre-wired</h3><p>Every tool call logs timestamp, tool, arguments, outcome, and duration to <span class="kbd">logs/audit.jsonl</span> — gitignored, append-only, yours to ship anywhere.</p></div>
-    <div class="card"><div class="ico">✅</div><h3>Audit as a test gate</h3><p><span class="kbd">npx mcpnew audit</span> exits non-zero if anything loosens: allow-all defaults, ungated tools, unwired hooks. Drop it into CI and stay honest.</p></div>
+    <div class="card"><div class="ico">✅</div><h3>Audit as a test gate</h3><p><span class="kbd">npx mcpnewcli audit</span> exits non-zero if anything loosens: allow-all defaults, ungated tools, unwired hooks. Drop it into CI and stay honest.</p></div>
     <div class="card"><div class="ico">⚙️</div><h3>TS or JS, your pick</h3><p>One flag switches between strict TypeScript (with manifest types) and plain ESM JavaScript. Both get identical security scaffolding.</p></div>
     <div class="card"><div class="ico">📦</div><h3>Zero-dep CLI</h3><p>mcpnew itself has zero runtime dependencies on Node 18+. Your generated project depends only on the official MCP SDK and zod.</p></div>
   </div>

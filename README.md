@@ -25,16 +25,37 @@ Zero runtime dependencies. Node 18+.
 mcpnew create my-server && cd my-server && npm install
 
 # 2. Add a typed tool stub — it lands DENIED in mcp.permissions.json
-npx mcpnew add-tool search-files
+npx mcpnewcli add-tool search-files
 
 # 3. Review, implement, then explicitly allow:
 #    "tools": { "search-files": "allow" }
 
 # 4. Keep yourself honest
-npx mcpnew audit
+npx mcpnewcli audit
 ```
 
 That's it. `mcpnew audit` fails non-zero if the manifest stops being deny-all, if any registered tool lacks its `requireAllowed()` gate, or if audit hooks are unwired — wire it into CI and stay secure by construction.
+
+## Wire it into CI
+
+Drop this into the scaffolded server's repo (`.github/workflows/audit.yml`):
+
+```yaml
+name: mcp-security-audit
+on: [push, pull_request]
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npx --yes mcpnewcli audit
+```
+
+Any finding — a loosened default, an ungated tool, an unwired hook — exits
+non-zero and fails the check before it can merge.
 
 ## What you get
 
