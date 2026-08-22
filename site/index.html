@@ -88,12 +88,24 @@ footer{border-top:1px solid var(--border);padding:40px 0;color:var(--muted);font
   <div class="term">
     <div class="bar"><span class="c r"></span><span class="c y"></span><span class="c g"></span><span class="t">zsh</span></div>
     <pre><span class="p">$</span> npx mcpnewcli create inventory --lang ts
-<span class="g">✔</span> scaffolded <span class="c">inventory</span> (ts)
-  <span class="dim">+</span> src/server.ts          <span class="dim"># typed tools + gates + audit hooks</span>
-  <span class="dim">+</span> src/audit.js           <span class="dim"># JSONL trail → logs/audit.jsonl</span>
-  <span class="dim">+</span> mcp.permissions.json   <span class="dim"># everything starts "deny"</span>
-<span class="p">$</span> npx mcpnewcli audit
-<span class="g">✔ audit passed: deny-all posture intact, audit hooks wired</span></pre>
+<span class="g">✔</span> scaffolded inventory (ts) in /tmp/inventory
+  <span class="dim">+</span> package.json
+  <span class="dim">+</span> README.md
+  <span class="dim">+</span> .gitignore
+  <span class="dim">+</span> src/manifest.ts
+  <span class="dim">+</span> src/audit.ts
+  <span class="dim">+</span> src/server.ts
+  <span class="dim">+</span> test/server.test.ts
+  <span class="dim">+</span> tsconfig.json
+  <span class="dim">+</span> mcp.permissions.json
+
+<span class="dim">ℹ next steps:</span>
+  cd inventory
+  npm install
+  npx mcpnew add-tool my-tool   <span class="dim"># typed stub, denied by default</span>
+  npx mcpnew audit              <span class="dim"># keep the deny-all posture honest</span>
+<span class="p">$</span> cd inventory && npx mcpnewcli audit
+<span class="g">✔</span> audit passed: deny-all posture intact, audit hooks wired (/tmp/inventory)</pre>
   </div>
 </section>
 
