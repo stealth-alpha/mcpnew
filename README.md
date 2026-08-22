@@ -76,3 +76,7 @@ Shipping MCP servers to production teams? **mcpnew Pro** ($9/mo) adds policy-as-
 ## License
 
 MIT
+
+---
+
+Part of the [stealth-alpha toolkit](https://stealth-alpha.github.io/toolkit/) — eight zero-dependency CLIs for release automation, agent security, and repo hygiene.
